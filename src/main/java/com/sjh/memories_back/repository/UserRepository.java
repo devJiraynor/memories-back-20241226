@@ -8,4 +8,6 @@ import com.sjh.memories_back.common.entity.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, String> {
   
+  boolean existsByUserId(String userId);
+
 }
