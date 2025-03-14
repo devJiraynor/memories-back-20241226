@@ -33,6 +33,11 @@ public class ResponseDto {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
   }
 
+  public static ResponseEntity<ResponseDto> signInFail() {
+    ResponseDto body = new ResponseDto(ResponseCode.SIGN_IN_FAIL, ResponseMessage.SIGN_IN_FAIL);
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
+  }
+
   public static ResponseEntity<ResponseDto> databaseError() {
     ResponseDto body = new ResponseDto(ResponseCode.DATABASE_ERROR, ResponseMessage.DATABASE_ERROR);
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);

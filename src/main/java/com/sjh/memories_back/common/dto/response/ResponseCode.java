@@ -6,5 +6,7 @@ public interface ResponseCode {
   String VALIDATION_FAIL = "VF";
   String EXIST_USER = "EU";
 
+  String SIGN_IN_FAIL = "SF";
+
   String DATABASE_ERROR = "DBE";
 }

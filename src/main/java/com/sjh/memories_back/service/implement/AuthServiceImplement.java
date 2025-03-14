@@ -7,9 +7,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.sjh.memories_back.common.dto.request.auth.IdCheckRequestDto;
+import com.sjh.memories_back.common.dto.request.auth.SignInRequestDto;
 import com.sjh.memories_back.common.dto.request.auth.SignUpRequestDto;
 import com.sjh.memories_back.common.dto.response.ResponseDto;
+import com.sjh.memories_back.common.dto.response.auth.SignInResponseDto;
 import com.sjh.memories_back.common.entity.UserEntity;
+import com.sjh.memories_back.provider.JwtProvider;
 import com.sjh.memories_back.repository.UserRepository;
 import com.sjh.memories_back.service.AuthService;
 
@@ -20,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthServiceImplement implements AuthService {
 
   private final UserRepository userRepository;
+  private final JwtProvider jwtProvider;
   private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
   @Override
@@ -61,6 +65,33 @@ public class AuthServiceImplement implements AuthService {
     }
 
     return ResponseDto.success(HttpStatus.CREATED);
+
+  }
+
+  @Override
+  public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
+    
+    String accessToken = null;
+
+    try {
+
+      String userId = dto.getUserId();
+      UserEntity userEntity = userRepository.findByUserId(userId);
+      if (userEntity == null) return ResponseDto.signInFail();
+
+      String userPassword = dto.getUserPassword();
+      String encodedPassword = userEntity.getUserPassword();
+      boolean isMatch = passwordEncoder.matches(userPassword, encodedPassword);
+      if (!isMatch) return ResponseDto.signInFail();
+
+      accessToken = jwtProvider.create(userId);
+
+    } catch(Exception exception) {
+      exception.printStackTrace();
+      return ResponseDto.databaseError();
+    }
+
+    return SignInResponseDto.success(accessToken);
 
   }
   
