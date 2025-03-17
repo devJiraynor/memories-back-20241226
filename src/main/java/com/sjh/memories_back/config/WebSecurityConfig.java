@@ -49,7 +49,7 @@ public class WebSecurityConfig {
       .cors(cors -> cors.configurationSource(corsConfigurationSource()))
       // description: 인가 설정 //
       .authorizeHttpRequests(request -> request
-        .requestMatchers("/api/v1/auth", "/api/v1/auth/**").permitAll()
+        .requestMatchers("/api/v1/auth", "/api/v1/auth/**", "/oauth2/**").permitAll()
         .anyRequest().authenticated()
       )
       // description: Oauth 로그인 적용 //
