@@ -15,6 +15,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.sjh.memories_back.filter.JwtAuthenticationFilter;
+import com.sjh.memories_back.service.implement.OAuth2UserServiceImplement;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class WebSecurityConfig {
 
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
+  private final OAuth2UserServiceImplement oauth2UserSerivce;
 
   // function: Web Security 설정 메서드 //
   @Bean
@@ -49,6 +51,12 @@ public class WebSecurityConfig {
       .authorizeHttpRequests(request -> request
         .requestMatchers("/api/v1/auth", "/api/v1/auth/**").permitAll()
         .anyRequest().authenticated()
+      )
+      // description: Oauth 로그인 적용 //
+      .oauth2Login(oauth2 -> oauth2
+        .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
+        .authorizationEndpoint(endpoint -> endpoint.baseUri("/api/v1/auth/sns"))
+        .userInfoEndpoint(endpoint -> endpoint.userService(oauth2UserSerivce))
       )
       // description: Jwt Authentication Filter 등록 //
       .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
