@@ -43,6 +43,11 @@ public class ResponseDto {
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
   }
 
+  public static ResponseEntity<ResponseDto> noPermission() {
+    ResponseDto body = new ResponseDto(ResponseCode.NO_PERMISSION, ResponseMessage.NO_PERMISSION);
+    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(body);
+  }
+
   public static ResponseEntity<ResponseDto> databaseError() {
     ResponseDto body = new ResponseDto(ResponseCode.DATABASE_ERROR, ResponseMessage.DATABASE_ERROR);
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
