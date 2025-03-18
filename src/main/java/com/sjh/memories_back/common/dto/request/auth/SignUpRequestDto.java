@@ -34,4 +34,6 @@ public class SignUpRequestDto {
   @Pattern(regexp="^(NORMAL|KAKAO|NAVER)$")
   private String joinType;
 
+  private String snsId;
+
 }

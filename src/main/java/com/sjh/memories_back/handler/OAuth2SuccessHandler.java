@@ -3,6 +3,7 @@ package com.sjh.memories_back.handler;
 import java.io.IOException;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,11 @@ import jakarta.servlet.http.HttpServletResponse;
 // class: OAuth2 유저 서비스 작업이 성공했을 때 처리를 담당하는 클래스 //
 @Component
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
+  @Value("${oauth.client-main}")
+  private String oAuthClientMain;
+  @Value("${oauth.client-auth}")
+  private String oAuthClientAuth;
   
   @Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -33,7 +39,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
       cookie.setMaxAge(60 * 60 * 9);
 
       response.addCookie(cookie);
-      response.sendRedirect("http://localhost:3000/main");
+      response.sendRedirect(oAuthClientMain);
     }
     // description: 회원가입 X //
     else {
@@ -53,7 +59,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
       
       response.addCookie(joinTypeCookie);
 
-      response.sendRedirect("http://localhost:3000/auth");
+      response.sendRedirect(oAuthClientAuth);
     }
   }
 
