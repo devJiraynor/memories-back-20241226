@@ -12,6 +12,6 @@ public interface DiaryRepository extends JpaRepository<DiaryEntity, Integer> {
   
   DiaryEntity findByDiaryNumber(Integer diaryNumber);
   
-  List<DiaryEntity> findByUserId(String userId);
+  List<DiaryEntity> findByUserIdOrderByWriteDateDesc(String userId);
 
 }

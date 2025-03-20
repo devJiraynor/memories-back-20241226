@@ -48,7 +48,7 @@ public class DiaryServiceImplement implements DiarySerivce {
     
     try {
 
-      diaryEntities = diaryRepository.findByUserId(userId);
+      diaryEntities = diaryRepository.findByUserIdOrderByWriteDateDesc(userId);
 
     } catch(Exception exception) {
       exception.printStackTrace();

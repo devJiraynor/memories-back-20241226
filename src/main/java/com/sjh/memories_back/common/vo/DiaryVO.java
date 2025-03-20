@@ -9,12 +9,14 @@ import lombok.Getter;
 
 @Getter
 public class DiaryVO {
+  private Integer diaryNumber;
   private String writeDate;
   private String title;
   private String weather;
   private String feeling;
 
   private DiaryVO(DiaryEntity diaryEntity) {
+    this.diaryNumber = diaryEntity.getDiaryNumber();
     this.writeDate = diaryEntity.getWriteDate();
     this.title = diaryEntity.getTitle();
     this.weather = diaryEntity.getWeather();
