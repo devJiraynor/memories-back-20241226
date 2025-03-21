@@ -9,4 +9,8 @@ import com.sjh.memories_back.common.entity.pk.MemoryTestPk;
 @Repository
 public interface MemoryTestRepository extends JpaRepository<MemoryTestEntity, MemoryTestPk> {
   
+  int countByUserId(String userId);
+
+  MemoryTestEntity findByUserIdAndSequence(String userId, Integer sequence);
+
 }
