@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sjh.memories_back.common.dto.request.test.PostConcentrationRequestDto;
 import com.sjh.memories_back.common.dto.request.test.PostMemoryRequestDto;
 import com.sjh.memories_back.common.dto.response.ResponseDto;
 import com.sjh.memories_back.common.dto.response.test.GetMemoryResponseDto;
@@ -29,6 +30,15 @@ public class TestController {
     @AuthenticationPrincipal String userId
   ) {
     ResponseEntity<ResponseDto> response = testService.postMemory(requestBody, userId);
+    return response;
+  }
+
+  @PostMapping("/concentration")
+  public ResponseEntity<ResponseDto> postConcentration(
+    @RequestBody @Valid PostConcentrationRequestDto requestBody,
+    @AuthenticationPrincipal String userId
+  ) {
+    ResponseEntity<ResponseDto> response = testService.postConcentration(requestBody, userId);
     return response;
   }
 

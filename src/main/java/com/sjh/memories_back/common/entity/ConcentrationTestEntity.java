@@ -1,5 +1,9 @@
 package com.sjh.memories_back.common.entity;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import com.sjh.memories_back.common.dto.request.test.PostConcentrationRequestDto;
 import com.sjh.memories_back.common.entity.pk.ConcentrationTestPk;
 
 import jakarta.persistence.Entity;
@@ -19,7 +23,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @IdClass(ConcentrationTestPk.class)
 public class ConcentrationTestEntity {
-  
   @Id
   private String userId;
   @Id
@@ -30,4 +33,27 @@ public class ConcentrationTestEntity {
   private Integer scoreGap;
   private Integer errorGap;
 
+  public ConcentrationTestEntity(PostConcentrationRequestDto dto, String userId) {
+    LocalDateTime now = LocalDateTime.now();
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+    this.userId = userId;
+    this.sequence = 1;
+    this.measurementScore = dto.getMeasurementScore();
+    this.errorCount = dto.getErrorCount();
+    this.testDate = now.format(dateTimeFormatter);
+  }
+
+  public ConcentrationTestEntity(PostConcentrationRequestDto dto, ConcentrationTestEntity preEntity, String userId) {
+    LocalDateTime now = LocalDateTime.now();
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+    this.userId = userId;
+    this.sequence = preEntity.getSequence() + 1;
+    this.measurementScore = dto.getMeasurementScore();
+    this.errorCount = dto.getErrorCount();
+    this.testDate = now.format(dateTimeFormatter);
+    this.scoreGap = dto.getMeasurementScore() - preEntity.getMeasurementScore();
+    this.errorCount = dto.getErrorCount() - preEntity.getErrorCount();
+  }
 }

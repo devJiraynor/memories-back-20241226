@@ -8,5 +8,9 @@ import com.sjh.memories_back.common.entity.pk.ConcentrationTestPk;
 
 @Repository
 public interface ConcentrationTestRepository extends JpaRepository<ConcentrationTestEntity, ConcentrationTestPk> {
+
+  Integer countByUserId(String userId);
+
+  ConcentrationTestEntity findByUserIdAndSequence(String userId, Integer sequence);
   
 }

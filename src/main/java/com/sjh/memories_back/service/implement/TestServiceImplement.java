@@ -7,10 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.sjh.memories_back.common.dto.request.test.PostConcentrationRequestDto;
 import com.sjh.memories_back.common.dto.request.test.PostMemoryRequestDto;
 import com.sjh.memories_back.common.dto.response.ResponseDto;
 import com.sjh.memories_back.common.dto.response.test.GetMemoryResponseDto;
+import com.sjh.memories_back.common.entity.ConcentrationTestEntity;
 import com.sjh.memories_back.common.entity.MemoryTestEntity;
+import com.sjh.memories_back.repository.ConcentrationTestRepository;
 import com.sjh.memories_back.repository.MemoryTestRepository;
 import com.sjh.memories_back.service.TestService;
 
@@ -21,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class TestServiceImplement implements TestService {
 
   private final MemoryTestRepository memoryTestRepository;
+  private final ConcentrationTestRepository concentrationTestRepository;
 
   @Override
   public ResponseEntity<ResponseDto> postMemory(PostMemoryRequestDto dto, String userId) {
@@ -37,6 +41,30 @@ public class TestServiceImplement implements TestService {
       }
 
       memoryTestRepository.save(memoryTestEntity);
+    } catch (Exception exception) {
+      exception.printStackTrace();
+      return ResponseDto.databaseError();
+    }
+
+    return ResponseDto.success(HttpStatus.CREATED);
+
+  }
+
+  @Override
+  public ResponseEntity<ResponseDto> postConcentration(PostConcentrationRequestDto dto, String userId) {
+
+    try {
+      ConcentrationTestEntity concentrationTestEntity = null;
+
+      Integer preSequence = concentrationTestRepository.countByUserId(userId);
+      if (preSequence == 0) {
+        concentrationTestEntity = new ConcentrationTestEntity(dto, userId);
+      } else {
+        ConcentrationTestEntity preConcentrationTestEntity = concentrationTestRepository.findByUserIdAndSequence(userId, preSequence);
+        concentrationTestEntity = new ConcentrationTestEntity(dto, preConcentrationTestEntity, userId);
+      }
+
+      concentrationTestRepository.save(concentrationTestEntity);
     } catch (Exception exception) {
       exception.printStackTrace();
       return ResponseDto.databaseError();
