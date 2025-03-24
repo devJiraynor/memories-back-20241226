@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.sjh.memories_back.common.dto.request.test.PostConcentrationRequestDto;
 import com.sjh.memories_back.common.dto.request.test.PostMemoryRequestDto;
 import com.sjh.memories_back.common.dto.response.ResponseDto;
+import com.sjh.memories_back.common.dto.response.test.GetConcentrationResponseDto;
 import com.sjh.memories_back.common.dto.response.test.GetMemoryResponseDto;
 import com.sjh.memories_back.common.entity.ConcentrationTestEntity;
 import com.sjh.memories_back.common.entity.MemoryTestEntity;
@@ -89,6 +90,24 @@ public class TestServiceImplement implements TestService {
     }
 
     return GetMemoryResponseDto.success(memoryTestEntities);
+
+  }
+
+  @Override
+  public ResponseEntity<? super GetConcentrationResponseDto> getConcentration(String userId) {
+
+    List<ConcentrationTestEntity> concentrationTestEntities = new ArrayList<>();
+    
+    try {
+      
+      concentrationTestEntities = concentrationTestRepository.findByUserIdOrderBySequenceDesc(userId);
+
+    } catch (Exception exception) {
+      exception.printStackTrace();
+      return ResponseDto.databaseError();
+    }
+
+    return GetConcentrationResponseDto.success(concentrationTestEntities);
 
   }
   

@@ -54,6 +54,6 @@ public class ConcentrationTestEntity {
     this.errorCount = dto.getErrorCount();
     this.testDate = now.format(dateTimeFormatter);
     this.scoreGap = dto.getMeasurementScore() - preEntity.getMeasurementScore();
-    this.errorCount = dto.getErrorCount() - preEntity.getErrorCount();
+    this.errorGap = dto.getErrorCount() - preEntity.getErrorCount();
   }
 }
