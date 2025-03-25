@@ -15,5 +15,6 @@ public interface MemoryTestRepository extends JpaRepository<MemoryTestEntity, Me
 
   MemoryTestEntity findByUserIdAndSequence(String userId, Integer sequence);
   List<MemoryTestEntity> findByUserIdOrderBySequenceDesc(String userId);
+  List<MemoryTestEntity> findTop10ByUserIdOrderBySequenceDesc(String userId);
 
 }
