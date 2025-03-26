@@ -12,4 +12,5 @@ public interface ResponseMessage {
   String NO_PERMISSION = "No Permission.";
 
   String DATABASE_ERROR = "Database Error";
+  String OPEN_AI_ERROR = "Open AI Error";
 }
