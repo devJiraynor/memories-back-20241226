@@ -44,7 +44,7 @@ public class OpenAIServiceImplement implements OpenAIService {
     Integer age = userEntity.getAge();
     String type = dto.getType();
 
-    String content = "대한민국 " + age + "세 " + gender + "이 " + type + "을 높일 수 있는 방법에 대해 알려주세요.";
+    String content = "대한민국 " + age + "세 " + gender + "이 " + type + "을 높일 수 있는 방법에 대해 알려주세요. 결과는 마크다운으로 작성해주세요.";
 
     List<GptMessageVO> message = List.of(new GptMessageVO("user", content));
     ChatRequestDto requestBody = new ChatRequestDto("gpt-4o-mini", message);
