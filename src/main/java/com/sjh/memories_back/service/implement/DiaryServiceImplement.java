@@ -52,7 +52,7 @@ public class DiaryServiceImplement implements DiarySerivce {
     
     try {
 
-      diaryEntities = diaryRepository.findByUserIdOrderByWriteDateDesc(userId);
+      diaryEntities = diaryRepository.findByOrderByDiaryNumberDesc();
 
     } catch(Exception exception) {
       exception.printStackTrace();
