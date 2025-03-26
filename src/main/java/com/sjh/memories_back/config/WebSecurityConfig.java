@@ -59,7 +59,7 @@ public class WebSecurityConfig {
       // description: 인가 설정 //
       .authorizeHttpRequests(request -> request
         .requestMatchers("/api/v1/auth", "/api/v1/auth/**", "/oauth2/**").permitAll()
-        .requestMatchers("/file/**").permitAll()
+        .requestMatchers("/file/**", "/api/v1/open-ai").permitAll()
         .requestMatchers("/api/v1/diary", "/api/v1/diary/**").authenticated()
         .anyRequest().authenticated()
       )

@@ -15,5 +15,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ChatRequestDto {
   private String model;
-  private List<GptMessageVO> message;
+  private List<GptMessageVO> messages;
 }
