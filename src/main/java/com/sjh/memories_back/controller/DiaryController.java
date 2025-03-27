@@ -16,6 +16,7 @@ import com.sjh.memories_back.common.dto.request.diary.PatchDiaryRequestDto;
 import com.sjh.memories_back.common.dto.request.diary.PostCommentRequestDto;
 import com.sjh.memories_back.common.dto.request.diary.PostDiaryRequestDto;
 import com.sjh.memories_back.common.dto.response.ResponseDto;
+import com.sjh.memories_back.common.dto.response.diary.GetCommentResponseDto;
 import com.sjh.memories_back.common.dto.response.diary.GetDiaryResponseDto;
 import com.sjh.memories_back.common.dto.response.diary.GetEmpathyResponseDto;
 import com.sjh.memories_back.common.dto.response.diary.GetMyDiaryResponseDto;
@@ -89,6 +90,14 @@ public class DiaryController {
     @AuthenticationPrincipal String userId
   ) {
     ResponseEntity<ResponseDto> response = diarySerivce.putEmpathy(diaryNumber, userId);
+    return response;
+  }
+
+  @GetMapping("/{diaryNumber}/comment")
+  public ResponseEntity<? super GetCommentResponseDto> getComment(
+    @PathVariable("diaryNumber") Integer diaryNumber
+  ) {
+    ResponseEntity<? super GetCommentResponseDto> response = diarySerivce.getComment(diaryNumber);
     return response;
   }
 
