@@ -3,6 +3,7 @@ package com.sjh.memories_back.service;
 import org.springframework.http.ResponseEntity;
 
 import com.sjh.memories_back.common.dto.request.diary.PatchDiaryRequestDto;
+import com.sjh.memories_back.common.dto.request.diary.PostCommentRequestDto;
 import com.sjh.memories_back.common.dto.request.diary.PostDiaryRequestDto;
 import com.sjh.memories_back.common.dto.response.ResponseDto;
 import com.sjh.memories_back.common.dto.response.diary.GetDiaryResponseDto;
@@ -18,4 +19,6 @@ public interface DiarySerivce {
 
   ResponseEntity<? super GetEmpathyResponseDto> getEmpathy(Integer diaryNumber);
   ResponseEntity<ResponseDto> putEmpathy(Integer diaryNumber, String userId);
+
+  ResponseEntity<ResponseDto> postComment(PostCommentRequestDto dto, Integer diaryNumber, String userId);
 }
